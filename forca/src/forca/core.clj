@@ -4,13 +4,20 @@
 (def total-de-vidas 6)
 
 (defn perdeu [] (print "Você perdeu"))
+(defn ganhou [] (print "Você ganhou!"))
+
+(defn letras-faltantes [palavras acertos])
+
+(defn acertou-a-palavra-toda? [palavra acertos]
+
+)
 
 (defn jogo [vidas]
 	(if (= vidas 0)
 		(perdeu)
-		(do 
-			(print vidas)
-			(jogo (dec vidas))
+		(if (acertou-a-palavra-toda? palavra acertos)
+			(ganhou)
+			(print "Chuta, amigo!")	
 		)
 	)
 )
