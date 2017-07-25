@@ -6,19 +6,33 @@
 (defn perdeu [] (print "Você perdeu"))
 (defn ganhou [] (print "Você ganhou!"))
 
-(defn letras-faltantes [palavras acertos])
-
-(defn acertou-a-palavra-toda? [palavra acertos]
-
+(defn letras-faltantes [palavras acertos]
+	(remove (fn [letras] (contains? acertos (str letra))) palavra)
 )
 
+(defn acertou-a-palavra-toda? [palavra acertos]
+	(empty? (letras-faltantes palavra acertos))
+)
+
+(defn le-letra! [] (read-line))
+
+(defn acertou? [chute palavra] (.contains palavra chute))
+
 (defn jogo [vidas]
-	(if (= vidas 0)
-		(perdeu)
-		(if (acertou-a-palavra-toda? palavra acertos)
-			(ganhou)
-			(print "Chuta, amigo!")	
-		)
+	(cond
+			(= vidas 0) (perdeu)
+			(acertou-a-palavra-toda? palavra acertos) (ganhou)
+			:else
+			(let [chute (le-letra!)]
+				(if (acertou? chute palavra)
+					(do
+							(println "Acertou a letra!")
+							(recur vidas palavra (conj acertos chute)))
+					(do
+							(println "Errou a letra! Perdeu vida!")
+							(recur (dec vidas) palavra acertos))
+				)		
+			)
 	)
 )
 
